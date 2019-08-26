@@ -11,4 +11,5 @@
     <string name="mobile">Mobile</string>
     <string name="age">Age</string>
     <string name="upload_picture">Upload Picture</string>
+    <string name="choose_picture">Choose Picture</string>
 </resources>
