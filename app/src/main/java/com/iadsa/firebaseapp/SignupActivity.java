@@ -65,6 +65,10 @@ public class SignupActivity extends AppCompatActivity {
             etPassword.setError("Password required");
             return;
         }
+        else if(password.length()<6) {
+            etPassword.setError("Password should be of minimum 6 characters");
+            return;
+        }
         firebaseCreateUser(email, password);
     }
 

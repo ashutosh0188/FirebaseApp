@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private TextView tvUserDetails;
     private Button btnLogout;
+    private Button btnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         tvUserDetails = (TextView) findViewById(R.id.tvUserDetails);
         btnLogout = (Button) findViewById(R.id.btnLogout);
+        btnProfile = (Button) findViewById(R.id.btnProfile);
     }
 
     private void initListeners() {
@@ -46,6 +48,12 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 logout();
+            }
+        });
+        btnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveToProfile();
             }
         });
     }
@@ -70,5 +78,9 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(new Intent(HomeActivity.this, AuthenticationActivity.class));
             HomeActivity.this.finish();
         }
+    }
+
+    private void moveToProfile() {
+        startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
     }
 }

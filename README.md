@@ -11,3 +11,7 @@ https://firebase.google.com/docs/auth/?authuser=0
 Basically email/password based authentication has done in this project.
 https://firebase.google.com/docs/auth/android/password-auth?authuser=0
 
+#Firebase database
+You need to create database at firebase console and then set up rule
+https://firebase.google.com/docs/auth/android/password-auth?authuser=0
+https://firebase.google.com/docs/firestore/security/rules-structure?authuser=0
