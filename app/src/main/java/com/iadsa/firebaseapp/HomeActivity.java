@@ -20,6 +20,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private Button btnLogout;
     private Button btnProfile;
+    private Button btnPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnProfile = (Button) findViewById(R.id.btnProfile);
+        btnPost = (Button) findViewById(R.id.btnPost);
     }
 
     private void initListeners() {
@@ -53,6 +55,12 @@ public class HomeActivity extends AppCompatActivity {
                 moveToProfile();
             }
         });
+        btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                moveToPost();
+            }
+        });
     }
 
     private void logout() {
@@ -66,5 +74,9 @@ public class HomeActivity extends AppCompatActivity {
 
     private void moveToProfile() {
         startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
+    }
+
+    private void moveToPost() {
+        startActivity(new Intent(HomeActivity.this, PostActivity.class));
     }
 }

@@ -61,14 +61,14 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void init() {
         firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("users");
-        storageReference = FirebaseStorage.getInstance().getReference().child("images");
-        etName = (EditText) findViewById(R.id.etName);
-        etMobile = (EditText) findViewById(R.id.etMobile);
-        etAge = (EditText) findViewById(R.id.etAge);
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        btnUploadPicture = (Button) findViewById(R.id.btnUploadPicture);
-        ivProfile = (ImageView) findViewById(R.id.ivProfile);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+        etName = findViewById(R.id.etName);
+        etMobile = findViewById(R.id.etMobile);
+        etAge = findViewById(R.id.etAge);
+        btnSubmit = findViewById(R.id.btnSubmit);
+        btnUploadPicture = findViewById(R.id.btnUploadPicture);
+        ivProfile = findViewById(R.id.ivProfile);
     }
 
     private void initListeners() {
@@ -78,6 +78,7 @@ public class ProfileActivity extends AppCompatActivity {
                 validate();
             }
         });
+        //choose picture from gallery
         btnUploadPicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,10 +115,10 @@ public class ProfileActivity extends AppCompatActivity {
         if(isChoosingImage) {
             return;
         }
-        final ProgressDialog progressDialog = Utils.showDialog(ProfileActivity.this, "Please wait, fetching user details", false);
         if (databaseReference != null && firebaseAuth != null) {
             final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             if (firebaseUser != null) {
+                final ProgressDialog progressDialog = Utils.showDialog(ProfileActivity.this, "Please wait, fetching user details", false);
                 Log.d(TAG, firebaseUser.getUid());
                 // Attach a listener to read the data at our user uid
                 databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
@@ -130,7 +131,7 @@ public class ProfileActivity extends AppCompatActivity {
                             etName.setText(user.getName());
                             etMobile.setText(user.getMobile());
                             etAge.setText(String.valueOf(user.getAge()));
-                            getPicture("profile",firebaseUser.getUid(), progressDialog);
+                            getPicture(firebaseUser.getUid(), progressDialog);
                         }
                     }
 
@@ -141,7 +142,6 @@ public class ProfileActivity extends AppCompatActivity {
                     }
                 });
             }
-
         }
     }
 
@@ -156,7 +156,7 @@ public class ProfileActivity extends AppCompatActivity {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             if (firebaseUser != null) {
                 final String uid = firebaseUser.getUid();
-                databaseReference.child(uid).setValue(user, new DatabaseReference.CompletionListener() {
+                databaseReference.child(DocumentConstants.DATA_USER_PATH).child(uid).setValue(user, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
                         if (databaseError != null) {
@@ -164,7 +164,7 @@ public class ProfileActivity extends AppCompatActivity {
                             Utils.hideProgressDialog(progressDialog);
                         } else {
                             Log.d(TAG, "OnCompleted of updating user successfully:" + uid);
-                            uploadImage("profile", uid, progressDialog);
+                            uploadImage(uid, progressDialog);
                         }
                     }
                 });
@@ -191,10 +191,10 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void uploadImage(String childName, String uid, final ProgressDialog progressDialog) {
+    private void uploadImage(String uid, final ProgressDialog progressDialog) {
         if (filePath != null && storageReference != null) {
             storageReference.
-                    child(childName).
+                    child(DocumentConstants.IMAGE_PROFILE_PATH).
                     child(uid).
                     putFile(filePath)
                     .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
@@ -207,11 +207,11 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void getPicture(String childName, String uid, final ProgressDialog progressDialog) {
+    private void getPicture(String uid, final ProgressDialog progressDialog) {
         if (storageReference != null) {
-            String fileName = storageReference.child(childName).child(uid).getName();
+            String fileName = storageReference.child(DocumentConstants.IMAGE_PROFILE_PATH).child(uid).getName();
             Log.d(TAG, "fileName:"+fileName);
-            storageReference.child(childName).child(uid).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            storageReference.child(DocumentConstants.IMAGE_PROFILE_PATH).child(uid).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     Log.d(TAG, "Image retrieval successfully.");
