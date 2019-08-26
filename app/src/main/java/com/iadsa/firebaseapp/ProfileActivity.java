@@ -55,9 +55,36 @@ public class ProfileActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callCreateUser();
+                validate();
             }
         });
+    }
+
+    private void validate() {
+        String name = etName.getText().toString();
+        String mobile = etMobile.getText().toString();
+        String age = etAge.getText().toString();
+        if(name.isEmpty()) {
+            etName.setError("Name required");
+            return;
+        }
+        else if(mobile.isEmpty()) {
+            etMobile.setError("Mobile required");
+            return;
+        }
+        else if(age.isEmpty()) {
+            etAge.setError("Age required");
+            return;
+        }
+        else if(age.length()>3) {
+            etAge.setError("Hey champ! Don't live more than 999 years ;)");
+            return;
+        }
+        User user = new User();
+        user.setName(etName.getText().toString());
+        user.setMobile(etMobile.getText().toString());
+        user.setAge(Integer.parseInt(etAge.getText().toString()));
+        createUser(user);
     }
 
     private void setUpData() {
@@ -76,7 +103,7 @@ public class ProfileActivity extends AppCompatActivity {
                             Log.d(TAG, user.toString());
                             etName.setText(user.getName());
                             etMobile.setText(user.getMobile());
-                            etAge.setText(user.getAge()+"");
+                            etAge.setText(String.valueOf(user.getAge()));
                         }
                     }
 
@@ -96,16 +123,12 @@ public class ProfileActivity extends AppCompatActivity {
      * And only logged in user can only modify his/her details.
      * This rule is set under firebase database rules section.
      */
-    private void callCreateUser() {
+    private void createUser(final User user) {
         final ProgressDialog progressDialog = Utils.showDialog(ProfileActivity.this, "Please wait, updating user details", false);
         if(databaseReference!=null && firebaseAuth!=null) {
             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
             if(firebaseUser!=null) {
                 final String uid = firebaseUser.getUid();
-                User user = new User();
-                user.setName(etName.getText().toString());
-                user.setMobile(etMobile.getText().toString());
-                user.setAge(Integer.parseInt(etAge.getText().toString()));
                 databaseReference.child(uid).setValue(user, new DatabaseReference.CompletionListener(){
                     @Override
                     public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {

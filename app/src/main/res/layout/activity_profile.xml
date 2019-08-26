@@ -19,7 +19,7 @@
         android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/name"
+        android:hint="@string/name"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         />
@@ -28,7 +28,7 @@
         android:id="@+id/etMobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/mobile"
+        android:hint="@string/mobile"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         />
@@ -37,7 +37,7 @@
         android:id="@+id/etAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:autofillHints="@string/age"
+        android:hint="@string/age"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:inputType="number"/>

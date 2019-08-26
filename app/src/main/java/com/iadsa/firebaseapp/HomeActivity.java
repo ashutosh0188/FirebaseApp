@@ -18,7 +18,6 @@ import com.google.firebase.auth.UserInfo;
 public class HomeActivity extends AppCompatActivity {
     private static final String TAG = HomeActivity.class.getSimpleName();
     private FirebaseAuth firebaseAuth;
-    private TextView tvUserDetails;
     private Button btnLogout;
     private Button btnProfile;
 
@@ -28,7 +27,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         init();
         initListeners();
-        setUpData();
     }
 
     @Override
@@ -38,7 +36,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private void init() {
         firebaseAuth = FirebaseAuth.getInstance();
-        tvUserDetails = (TextView) findViewById(R.id.tvUserDetails);
         btnLogout = (Button) findViewById(R.id.btnLogout);
         btnProfile = (Button) findViewById(R.id.btnProfile);
     }
@@ -56,19 +53,6 @@ public class HomeActivity extends AppCompatActivity {
                 moveToProfile();
             }
         });
-    }
-
-    private void setUpData() {
-        if(firebaseAuth!=null) {
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            if(firebaseUser!=null) {
-                for (UserInfo userInfo : firebaseUser.getProviderData()) {
-                    Log.d(TAG, "FirebaseUser:"+userInfo);
-                    String details = "Details:\nName: " + userInfo.getDisplayName() + "\n Email: " +  userInfo.getEmail() + "\nPhone: " + userInfo.getPhoneNumber() + "\nUID: " + userInfo.getUid();
-                    tvUserDetails.setText(details);
-                }
-            }
-        }
     }
 
     private void logout() {
