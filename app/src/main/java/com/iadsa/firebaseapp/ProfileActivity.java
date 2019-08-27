@@ -121,7 +121,7 @@ public class ProfileActivity extends AppCompatActivity {
                 final ProgressDialog progressDialog = Utils.showDialog(ProfileActivity.this, "Please wait, fetching user details", false);
                 Log.d(TAG, firebaseUser.getUid());
                 // Attach a listener to read the data at our user uid
-                databaseReference.child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                databaseReference.child(DocumentConstants.DATA_USER_PATH).child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Utils.hideProgressDialog(progressDialog);
