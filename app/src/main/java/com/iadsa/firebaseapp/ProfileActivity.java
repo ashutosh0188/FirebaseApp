@@ -48,7 +48,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView ivProfile;
     private Uri filePath;
     private final int PICK_IMAGE_REQUEST = 1001;
-    private boolean isChoosingImage; //to avoid re-calling setUpData() method, once user chooses to choose picture
+    private boolean isChoosingImage; //to avoid re-calling setUpData() method, once user chooses to choose picture and come backs
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,10 +183,10 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        isChoosingImage = false;
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             filePath = data.getData();
-            isChoosingImage = false;
             setImage(filePath);
         }
     }

@@ -128,7 +128,7 @@ public class CreatePostActivity extends AppCompatActivity {
 
     private void createPost(Post post) {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null && filePath != null) {
+        if (firebaseUser != null) {
             final String uid = firebaseUser.getUid();
             uploadImage(uid, post);
         }

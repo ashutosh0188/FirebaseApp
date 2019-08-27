@@ -17,4 +17,8 @@
     <string name="fetch_post">All Posts</string>
     <string name="title">Title</string>
     <string name="body">Body</string>
+    <string name="retry">Retry</string>
+    <string name="empty_screen">No data</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
