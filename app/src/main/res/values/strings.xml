@@ -3,7 +3,10 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
-    <string name="signup">Create new account</string>
+    <string name="signup">Signup Using Email</string>
+    <string name="signup_phone">Signup Using Phone</string>
+    <string name="otp">OTP</string>
+    <string name="verify">Verify</string>
     <string name="logout">Logout</string>
     <string name="profile">User Profile</string>
     <string name="submit">Submit</string>

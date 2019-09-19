@@ -26,6 +26,7 @@ public class AuthenticationActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnLogin;
     private Button btnSignup;
+    private Button btnSignupPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class AuthenticationActivity extends AppCompatActivity {
         etPassword = (EditText) findViewById(R.id.etPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnSignup = (Button) findViewById(R.id.btnSignup);
+        btnSignupPhone = (Button) findViewById(R.id.btnSignupPhone);
     }
 
     private void initListeners() {
@@ -63,6 +65,13 @@ public class AuthenticationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 singup();
+            }
+        });
+
+        btnSignupPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                singupPhone();
             }
         });
     }
@@ -102,6 +111,11 @@ public class AuthenticationActivity extends AppCompatActivity {
 
     private void singup() {
         startActivity(new Intent(AuthenticationActivity.this, SignupActivity.class));
+        AuthenticationActivity.this.finish();
+    }
+
+    private void singupPhone() {
+        startActivity(new Intent(AuthenticationActivity.this, SignupPhoneNumberActivity.class));
         AuthenticationActivity.this.finish();
     }
 
